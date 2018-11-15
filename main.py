@@ -27,8 +27,12 @@ class Game:
         self.enemy = Enemy()
         self.all_sprites.add(self.enemy)
         #call the run method
-        self.platform = Platform()
-        self.all_sprites.add(self.platform)
+        self.wall = Wall()
+        self.all_sprites.add(self.wall)
+        #call the run method
+        self.wall2 = Wall()
+        self.wall2.rect.x = 150
+        self.all_sprites.add(self.wall2)
         self.run()
     def run(self):
         self.playing = True
@@ -39,8 +43,16 @@ class Game:
             self.draw()
     def update(self):
         # self.enemy_follow()
-        self.all_sprites.update()
-        # print(pg.sprite.groupcollide(self.all_sprites, self.all_sprites, False, False))
+        if pg.Rect.colliderect(self.wall.rect,self.player.rect) == False:  
+            self.all_sprites.update()
+        else:
+            self.wall.rect.x += -5
+            self.wall.rect.y += -5
+            self.wall2.rect.x += -5
+            self.wall2.rect.y += -5
+            self.enemy.rect.x += -5
+            self.enemy.rect.y += -5
+        # print(pg.sprite.spritecollide(self.player, self.all_sprites, False, False))
 
     def events(self):
         for event in pg.event.get():

@@ -40,7 +40,7 @@ class Player(Sprite):
         self.rect.x += self.vx
         self.rect.y += self.vy 
 
-class Platform(Sprite):
+class Wall(Sprite):
     def __init__(self):
         Sprite.__init__(self)
         self.image = pg.Surface((100,40))
@@ -49,18 +49,15 @@ class Platform(Sprite):
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
         self.vx = 0
         self.vy = 0
-        self.acceleration = 0.5
-        self.falling = False
-        self.max_velocity = -25
         self.rect.x = 0
         self.rect.y = 100
 
     def update(self):
         self.vx = 0
         self.vy = 0
-        self.falling = False
         #checks if a button is pressed
 
+        
         keys = pg.key.get_pressed()
         if keys[pg.K_a]:
             self.vx = 5
