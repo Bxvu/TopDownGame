@@ -55,18 +55,23 @@ class Wall(Sprite):
     def update(self):
         self.vx = 0
         self.vy = 0
+        self.moving = "no"
         #checks if a button is pressed
 
         
         keys = pg.key.get_pressed()
         if keys[pg.K_a]:
             self.vx = 5
+            self.moving = "left"
         if keys[pg.K_d]:
-            self.vx = -5        
+            self.vx = -5
+            self.moving = "right"        
         if keys[pg.K_w]:
             self.vy = 5
+            self.moving = "up"
         if keys[pg.K_s]:
             self.vy = -5
+            self.moving = "down"
 
         self.rect.x += self.vx
         self.rect.y += self.vy
@@ -83,16 +88,21 @@ class Enemy(Sprite):
     def update(self):
         self.vx = 0
         self.vy = 0 
+        self.moving = "no"
 
         keys = pg.key.get_pressed()
         if keys[pg.K_a]:
             self.vx = 5
+            self.moving = "left"
         if keys[pg.K_d]:
-            self.vx = -5        
+            self.vx = -5
+            self.moving = "right"           
         if keys[pg.K_w]:
             self.vy = 5
+            self.moving = "up"
         if keys[pg.K_s]:
             self.vy = -5
+            self.moving = "down"
         
         self.rect.x += self.vx
         self.rect.y += self.vy

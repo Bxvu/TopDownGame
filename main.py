@@ -20,19 +20,24 @@ class Game:
         self.running = True
     def new(self):
         self.all_sprites = pg.sprite.Group()
+        self.movement = pg.sprite.Group()
         #add a player to the group
         self.player = Player()
         self.all_sprites.add(self.player)
         #adds an enemy to the group
         self.enemy = Enemy()
         self.all_sprites.add(self.enemy)
+        self.movement.add(self.enemy)
         #call the run method
         self.wall = Wall()
         self.all_sprites.add(self.wall)
+        self.movement.add(self.wall)
         #call the run method
         self.wall2 = Wall()
         self.wall2.rect.x = 150
+        self.wall2.image = pg.transform.rotate(self.wall2.image,90)
         self.all_sprites.add(self.wall2)
+        self.movement.add(self.wall2)
         self.run()
     def run(self):
         self.playing = True
@@ -43,15 +48,26 @@ class Game:
             self.draw()
     def update(self):
         # self.enemy_follow()
-        if pg.Rect.colliderect(self.wall.rect,self.player.rect) == False:  
+        if pg.Rect.colliderect(self.wall.rect,self.player.rect) or pg.Rect.colliderect(self.wall2.rect,self.player.rect) == True:  
+            if self.enemy.moving and self.wall.moving and self.wall2.moving == "up":
+                self.wall.rect.y += -5
+                self.wall2.rect.y += -5
+                self.enemy.rect.y += -5
+            if self.enemy.moving and self.wall.moving and self.wall2.moving == "down":
+                self.wall.rect.y += 5
+                self.wall2.rect.y += 5
+                self.enemy.rect.y += 5
+            if self.enemy.moving and self.wall.moving and self.wall2.moving == "left":
+                self.wall.rect.x += -5
+                self.wall2.rect.x += -5
+                self.enemy.rect.x += -5
+            if self.enemy.moving and self.wall.moving and self.wall2.moving == "right":
+                self.wall.rect.x += 5
+                self.wall2.rect.x += 5
+                self.enemy.rect.x += 5
             self.all_sprites.update()
         else:
-            self.wall.rect.x += -5
-            self.wall.rect.y += -5
-            self.wall2.rect.x += -5
-            self.wall2.rect.y += -5
-            self.enemy.rect.x += -5
-            self.enemy.rect.y += -5
+            self.all_sprites.update()
         # print(pg.sprite.spritecollide(self.player, self.all_sprites, False, False))
 
     def events(self):
